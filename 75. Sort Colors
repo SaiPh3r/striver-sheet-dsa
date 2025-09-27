@@ -1,0 +1,29 @@
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        // brute my approach count the number of zeroe one and two and then update nums
+        int z = 0;
+        int o = 0;
+        int t = 0;
+
+        for(int i = 0; i<nums.size(); i++){
+            if(nums[i] == 0){
+                z++;
+            }else if(nums[i] == 1){
+                o++;
+            }else{
+                t++;
+            }
+        }
+        // now i have no of z o and t;
+        for(int i = 0; i<z; i++){
+            nums[i] = 0;
+        }
+        for(int j = z ; j< o+z ; j++){
+            nums[j] = 1;
+        }
+        for(int j = z+o ; j< z+o+t ; j++){
+            nums[j] = 2;
+        }
+    }
+};
