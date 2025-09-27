@@ -1,0 +1,51 @@
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        // ig i can solve this using a map
+        unordered_map<int, int> freq;
+        for(int i = 0; i<nums.size();i++){
+            if(freq.find(nums[i]) != freq.end()){
+                // that means found then increment it value
+                freq[nums[i]]++;
+
+            }else{
+                // this means not found;
+                freq.insert({nums[i], 1});
+            }
+        } 
+        // now chrck frew
+        for(auto &p : freq){
+            if(p.second >1){
+                return p.first;
+            }
+        }
+        return -1;
+    }
+    
+};
+
+// better approach using slow fast pointer
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        int slow = nums[0];
+        int fast = nums[0];
+
+        // Step 1: Detect cycle using while loop
+        slow = nums[slow];
+        fast = nums[nums[fast]];
+        while (slow != fast) {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        }
+
+        // Step 2: Find entry point of the cycle (duplicate number)
+        slow = nums[0];
+        while (slow != fast) {
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+
+        return slow; // duplicate number
+    }
+};
