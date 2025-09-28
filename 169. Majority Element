@@ -1,0 +1,41 @@
+// hashing method
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        unordered_map<int,int>map;
+        for(int i=0; i<nums.size(); i++){
+            if(map.find(nums[i])!=map.end()){
+                map[nums[i]]++;
+            }else{
+                 map[nums[i]] = 1;
+            }
+        }
+        for(auto it : map){
+            if(it.second > nums.size()/2){
+                return it.first;
+            }
+        }
+        return -1;
+    }
+};
+
+//using moores voting algorithm
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        
+        int frequency = 0;
+        int ans = 0;
+        for(int val:nums){
+            if(frequency ==0){
+                ans = val;
+            }
+            if(ans == val){
+                frequency++;
+            } else{
+                frequency--;
+            }
+        }
+        return ans;
+    }
+};
