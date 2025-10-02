@@ -1,0 +1,72 @@
+class Solution {
+public:
+    int count = 0;
+    void merge(vector<int>& arr, int s, int e) {
+        int mid = (s + e) / 2;
+        int len1 = mid - s + 1;
+        int len2 = e - mid;
+
+        // ab arr ko copy krlete h left right vector me
+        vector<int> left(len1);
+        vector<int> right(len2);
+        int index = s;
+
+        for (int i = 0; i < len1; i++) {
+            left[i] = arr[index];
+            index++;
+        }
+        index = mid + 1;
+        for (int j = 0; j < len2; j++) {
+            right[j] = arr[index];
+            index++;
+        }
+        int j = 0;
+        for (int i = 0; i < len1; i++) {
+            while (j < len2 && (long long)left[i] > 2LL * right[j]) {
+                j++;
+            }
+            count += j; // all right[0..j-1] form valid pairs with left[i]
+        }
+        // ab hume bas merge 2 sorted arrays ka code likhna h
+        int i = 0;
+        j = 0;
+        index = s;
+        while (i < len1 && j < len2) {
+            if (left[i] < right[j]) {
+                arr[index] = left[i];
+                i++;
+                index++;
+            } else {
+                arr[index] = right[j];
+                j++;
+                index++;
+            }
+        }
+        while (i < len1) {
+            arr[index] = left[i];
+            i++;
+            index++;
+        }
+        while (j < len2) {
+            arr[index] = right[j];
+            j++;
+            index++;
+        }
+    }
+    void mergeSort(vector<int>& arr, int s, int e) {
+        int mid = (s + e) / 2;
+        // base case
+        if (s >= e)
+            return;
+        // left
+        mergeSort(arr, s, mid);
+        // right
+        mergeSort(arr, mid + 1, e);
+
+        merge(arr, s, e);
+    }
+    int reversePairs(vector<int>& nums) {
+        mergeSort(nums, 0, nums.size() - 1);
+        return count;
+    }
+};
