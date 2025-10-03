@@ -1,0 +1,18 @@
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        // lets solve this using hashmap
+        unordered_map<int,int>map;
+        int moreNeeded = 0;
+        for(int i=0;i<nums.size();i++){
+            moreNeeded = target-nums[i];
+            if(map.find(moreNeeded)!=map.end()){
+                // milgya
+                return{ map[moreNeeded], i};
+            }else{
+                map[nums[i]] = i;
+            }
+        }
+        return {};
+    }
+};
