@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        // optimal solution using unordered_set
+        if(nums.size() ==0) return 0;
+        int longest = 1;
+        unordered_set<int>s(nums.begin() , nums.end());
+
+        for(auto i:s){
+            if(s.find(i-1) == s.end()){
+                // mtlb i se choti value nhi mili mtlb i se he start hoga
+                int currentElement = i;
+                int count =1;
+                while(s.find(currentElement+1)!=s.end()){
+                    currentElement++;
+                    count++;
+                }
+                longest = max(longest , count);
+            }
+        }
+        return longest;
+    }
+};
